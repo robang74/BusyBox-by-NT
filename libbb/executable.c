@@ -88,7 +88,7 @@ int FAST_FUNC applet_execve(const char *name, char *const argv[], char *const en
 		 * since vfork() requires the child to exec() or _exit() for the
 		 * parent to resume, running applets with NOEXEC and vfork()
 		 * may result in deadlocks, as exec() will never be called. */
-		if (BB_MMU && APPLET_IS_NOEXEC(applet)) {
+		if (BB_MMU && (ENABLE_FEATURE_ALWAYS_NOEXEC || APPLET_IS_NOEXEC(applet))) {
 			/* since run_noexec_applet_and_exit takes char **argv,
 			 * we need to copy argv to a new heap-allocated array. */
 			char **copied_argv = clone_string_array(argv);
